@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เลือกฟังก์ชันการใช้งาน - RubberSync</title>
+    <!-- เรียกใช้ฟอนต์ Sarabun -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- เรียกใช้ไอคอนจาก Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ตั้งค่าพื้นฐาน */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        body {
+            /* พื้นหลังสีเทาเข้มสำหรับเวลาเปิดบนคอมพิวเตอร์ เพื่อให้กล่องมือถือเด่นขึ้น */
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* จำลองหน้าจอมือถือ */
+        .app-container {
+            width: 100%;
+            max-width: 428px; /* ขนาดมาตรฐานหน้าจอมือถือ */
+            background-color: #f8f9fa; /* สีพื้นหลังของแอป (เทาอ่อนมากๆ) */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        }
+
+        /* 1. ส่วนหัว: โปรไฟล์ผู้ใช้ */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            background-color: #f4f5f7;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .profile-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* 2. ส่วนเนื้อหาหลัก */
+        .main-content {
+            padding: 30px 25px;
+            flex-grow: 1;
+            padding-bottom: 90px; /* เว้นที่ว่างให้แถบเมนูด้านล่าง */
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            color: #0b3b24; /* สีเขียวเข้ม RubberSync */
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 35px;
+            line-height: 1.5;
+        }
+
+        /* 3. การ์ดเมนูตัวเลือก */
+        .menu-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden; /* เพื่อให้เส้นแถบสีด้านซ้ายไม่ทะลุขอบมน */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .menu-card:active {
+            transform: scale(0.98);
+        }
+
+        /* แถบสีแนวตั้งด้านซ้ายของการ์ด */
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+        }
+
+        .card-green::before { background-color: #3b5f41; } /* สีเขียว */
+        .card-blue::before { background-color: #5865f2; }  /* สีฟ้า Discord */
+
+        .card-icon-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            font-size: 45px;
+        }
+
+        .card-green .card-icon { color: #3b5f41; }
+        .card-blue .card-icon { color: #5865f2; }
+
+        /* ป้ายแจ้งเตือนสีแดง (Badge) */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -12px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ffffff;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b3b24;
+            margin-bottom: 5px;
+        }
+
+        .card-desc {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* 4. แถบเมนูนำทางด้านล่าง (Bottom Navigation) */
+        .bottom-nav {
+            position: absolute; /* ติดอยู่ด้านล่างของ app-container */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 15px 0;
+            border-top: 1px solid #e0e0e0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 14px;
+            width: 33.33%;
+        }
+
+        /* สถานะเมนูที่ถูกเลือกใช้งานอยู่ */
+        .nav-item.active {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- คอนเทนเนอร์หลักจำลองหน้าจอมือถือ -->
+    <div class="app-container">
+
+        <!-- 1. ส่วนหัวโปรไฟล์ -->
+        <header class="profile-header">
+            <!-- ใช้รูปภาพตัวอย่าง สามารถเปลี่ยน URL เป็นรูปจากฐานข้อมูลได้ -->
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150" alt="Profile Picture" class="profile-img">
+            <div class="profile-name">สมจิตร เตือนอิน</div>
+        </header>
+
+        <!-- 2. เนื้อหาหลัก และ เมนูการ์ด -->
+        <main class="main-content">
+            
+            <h1 class="page-title">เลือกฟังก์ชันการใช้งาน</h1>
+            <p class="page-subtitle">จัดการสวนยางพาราของคุณได้อย่างมี<br>ประสิทธิภาพ</p>
+
+            <!-- เมนูที่ 1: สร้างคำขอเบิกจ่าย -->
+            <a href="#" class="menu-card card-green">
+                <div class="card-icon-wrapper">
+                    <i class="fa-solid fa-money-check-dollar card-icon"></i>
+                </div>
+                <h2 class="card-title">สร้างคำขอเบิกจ่าย</h2>
+                <p class="card-desc">สร้างคำบอกเบิกจ่ายสำหรับ</p> <!-- พิมพ์ตามข้อความในภาพ -->
+            </a>
+
+            <!-- เมนูที่ 2: ชุมชน Discord -->
+            <a href="#" class="menu-card card-blue">
+                <div class="card-icon-wrapper">
+                    <i class="fa-solid fa-comments card-icon"></i>
+                    <!-- ป้ายแจ้งเตือนสีแดง -->
+                    <div class="notification-badge">2</div>
+                </div>
+                <h2 class="card-title">ชุมชน Discord</h2>
+                <p class="card-desc">พูดคุยและรับการแจ้งเตือน</p>
+            </a>
+
+        </main>
+
+        <!-- 3. แถบเมนูด้านล่าง (Bottom Nav) -->
+        <nav class="bottom-nav">
+            <!-- เมนู หน้าหลัก (สถานะ Active) -->
+            <a href="#" class="nav-item active">
+                <i class="fa-solid fa-table-cells-large nav-icon"></i>
+                <span>หน้าหลัก</span>
+            </a>
+            
+            <!-- เมนู ชุมชน -->
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-user-group nav-icon"></i>
+                <span>ชุมชน</span>
+            </a>
+            
+            <!-- เมนู ตั้งค่า -->
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-gear nav-icon"></i>
+                <span>ตั้งค่า</span>
+            </a>
+        </nav>
+
+    </div>
+
+</body>
+</html>
