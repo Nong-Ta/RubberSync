@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สร้างบัญชีผู้ใช้ - RubberSync</title>
+    <!-- ใช้ฟอนต์ Sarabun เพื่อให้อ่านง่าย -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        body {
+            /* ภาพพื้นหลังเส้นทางในป่า/สวน */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80') center/cover no-repeat;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* กล่องหลักแบบการ์ดสีขาว */
+        .register-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden; /* เพื่อให้เส้นขอบด้านบนไม่ทะลุกล่อง */
+            padding-bottom: 35px;
+        }
+
+        /* แถบย้อนกลับด้านบน */
+        .top-bar {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eeeeee;
+            margin-bottom: 25px;
+        }
+
+        .back-link {
+            color: #0b3b24; /* สีเขียวเข้มมาก */
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-link:hover {
+            color: #1e4d36;
+        }
+
+        /* ส่วนโลโก้และข้อความ */
+        .content-section {
+            padding: 0 30px;
+            text-align: center;
+        }
+
+        .logo-circle {
+            width: 85px;
+            height: 85px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #b3a398;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .logo-text {
+            color: #333;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        h2.title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0b3b24;
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        /* ส่วนฟอร์มกรอกข้อมูล */
+        .form-group {
+            text-align: left;
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper .left-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 18px;
+        }
+
+        .input-wrapper .right-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 14px 15px 14px 45px; /* เผื่อที่ให้ไอคอนซ้าย */
+            background-color: #f5f5f5;
+            border: none;
+            border-bottom: 2px solid #a3a3a3;
+            font-size: 16px;
+            color: #333;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        /* เผื่อที่ให้ช่องรหัสผ่านที่มีไอคอนรูปตาทางขวา */
+        input[type="password"],
+        input#password {
+            padding-right: 45px; 
+        }
+
+        input::placeholder {
+            color: #888;
+            font-weight: 400;
+        }
+
+        input:focus {
+            border-bottom: 2px solid #1e4d36;
+            background-color: #f0f4f1;
+        }
+
+        /* ข้อความแนะนำรหัสผ่าน */
+        .password-hint {
+            font-size: 14px;
+            color: #555;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        /* ปุ่มกด */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: #0b3b24; /* สีเขียวเข้มเข้ากับปุ่ม */
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn-submit:hover {
+            background-color: #153826;
+        }
+
+        /* ลิงก์ด้านล่างสุด */
+        .login-link-container {
+            font-size: 16px;
+            color: #555;
+            font-weight: 400;
+        }
+
+        .login-link {
+            color: #0b3b24;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-card">
+        
+        <!-- แถบย้อนกลับ (เชื่อมไปหน้า Login_User.html) -->
+        <div class="top-bar">
+            <a href="Login_User.html" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> ย้อนกลับ
+            </a>
+        </div>
+
+        <!-- ส่วนเนื้อหาหลัก -->
+        <div class="content-section">
+            
+            <div class="logo-circle">
+                <span class="logo-text">RubberSync</span>
+            </div>
+
+            <h2 class="title">สร้างบัญชีผู้ใช้</h2>
+            <p class="subtitle">เริ่มต้นการทำงานสวนยางพาราของคุณ<br>อย่างมีประสิทธิภาพ</p>
+
+            <!-- ฟอร์มลงทะเบียน -->
+            <form action="#" method="POST">
+                
+                <!-- ชื่อ - นามสกุล -->
+                <div class="form-group">
+                    <label for="fullname">ชื่อ - นามสกุล</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-user left-icon"></i>
+                        <input type="text" id="fullname" placeholder="กรอกชื่อและนามสกุลของคุณ" required maxlength="100">
+                    </div>
+                </div>
+
+                <!-- เบอร์โทรศัพท์ -->
+                <div class="form-group">
+                    <label for="phone">เบอร์โทรศัพท์</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-phone left-icon"></i>
+                        <input type="tel" id="phone" placeholder="กรอกเบอร์โทรศัพท์" required>
+                    </div>
+                </div>
+
+                <!-- รหัสผ่าน -->
+                <div class="form-group">
+                    <label for="password">รหัสผ่าน</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock left-icon"></i>
+                        <input type="password" id="password" placeholder="สร้างรหัสผ่านของคุณ" required minlength="8">
+                        <!-- ไอคอนตาสลับโหมด เริ่มที่ไม่มีขีดทับ -->
+                        <i class="fa-regular fa-eye right-icon" id="togglePassword"></i>
+                    </div>
+                    <p class="password-hint">รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร</p>
+                </div>
+
+                <!-- ปุ่มเสร็จสิ้น -->
+                <button type="submit" class="btn-submit">เสร็จสิ้น</button>
+
+            </form>
+
+            <!-- ข้อความด้านล่าง -->
+            <div class="login-link-container">
+                มีบัญชีผู้ใช้แล้ว? <a href="Login_User.html" class="login-link">เข้าสู่ระบบ</a>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- สคริปต์สลับการแสดงรหัสผ่าน -->
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function () {
+            // สลับประเภทของ input ระหว่าง password (ซ่อน) และ text (แสดง)
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            
+            // สลับไอคอนดวงตาระหว่างแบบปกติ (fa-eye) และแบบมีขีดทับ (fa-eye-slash)
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>
+</html>
