@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RubberSync Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- เปลี่ยนเป็นฟอนต์ Sarabun (มีหัว อ่านง่าย) -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -13,11 +14,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Prompt', sans-serif;
+            font-family: 'Sarabun', sans-serif; /* เรียกใช้ฟอนต์ Sarabun */
         }
 
         body {
-            /* ใส่รูปภาพพื้นหลังและปรับให้เต็มจอ (สามารถเปลี่ยน URL เป็นรูปใบไม้ของจริงได้) */
             background: linear-gradient(rgba(143, 187, 137, 0.7), rgba(143, 187, 137, 0.7)), url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&q=80') center/cover no-repeat;
             min-height: 100vh;
             display: flex;
@@ -27,7 +27,6 @@
             position: relative;
         }
 
-        /* ส่วนหัว Logo และข้อความ */
         .header-section {
             text-align: center;
             color: white;
@@ -44,30 +43,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 4px solid #b3a398; /* สีขอบโลโก้จำลอง */
+            border: 4px solid #b3a398;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .logo-text {
             color: #333;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
         }
 
         .header-section h1 {
-            font-size: 28px;
-            font-weight: 600;
+            font-size: 32px; /* ปรับให้ใหญ่ขึ้น */
+            font-weight: 700;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             margin-bottom: 5px;
         }
 
         .header-section p {
-            font-size: 16px;
-            font-weight: 300;
+            font-size: 18px; /* ปรับให้ใหญ่ขึ้น */
+            font-weight: 400;
             text-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
-        /* กล่องเข้าสู่ระบบ */
         .login-card {
             background-color: #ffffff;
             width: 90%;
@@ -78,9 +76,8 @@
             z-index: 1;
         }
 
-        /* ส่วนของการกรอกข้อมูล (Input) */
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .label-row {
@@ -91,15 +88,16 @@
         }
 
         label {
-            font-size: 14px;
+            font-size: 16px; /* ปรับให้ใหญ่ขึ้น */
             font-weight: 600;
             color: #222;
         }
 
         .forgot-password {
-            font-size: 12px;
+            font-size: 14px; /* ปรับให้ใหญ่ขึ้น */
             color: #1e4d36;
             text-decoration: none;
+            font-weight: 500;
         }
 
         .input-wrapper {
@@ -113,19 +111,26 @@
             background-color: #f5f5f5;
             border: none;
             border-bottom: 2px solid #d1d1d1;
-            font-size: 14px;
+            font-size: 16px; /* ปรับให้ใหญ่ขึ้นให้อ่านง่าย */
             color: #333;
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
 
         input::placeholder {
             color: #aaa;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         input:focus {
             border-bottom: 2px solid #1e4d36;
+        }
+
+        /* ตกแต่งช่องที่ถูกล็อกให้เป็นสีเทา */
+        input:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+            color: #999;
         }
 
         .toggle-password {
@@ -135,10 +140,15 @@
             transform: translateY(-50%);
             color: #555;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px; 
         }
 
-        /* Checkbox จดจำฉัน */
+        /* ซ่อนไอคอนดวงตาชั่วคราวถ้ารหัสผ่านถูกล็อก */
+        .toggle-password.disabled-icon {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
         .checkbox-group {
             display: flex;
             align-items: center;
@@ -146,26 +156,25 @@
         }
 
         .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             margin-right: 10px;
             accent-color: #1e4d36;
             cursor: pointer;
         }
 
         .checkbox-group label {
-            font-weight: 400;
-            font-size: 14px;
+            font-weight: 500;
+            font-size: 16px; 
             color: #444;
             cursor: pointer;
         }
 
-        /* ปุ่มกด */
         .btn {
             width: 100%;
             padding: 14px;
             border-radius: 6px;
-            font-size: 16px;
+            font-size: 18px; 
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
@@ -175,7 +184,7 @@
         }
 
         .btn-login {
-            background-color: #1e4d36; /* สีเขียวเข้ม */
+            background-color: #1e4d36;
             color: #ffffff;
             border: none;
             margin-bottom: 15px;
@@ -196,13 +205,12 @@
             border-color: #1e4d36;
         }
 
-        /* ลิงก์แอดมิน มุมซ้ายล่าง */
         .admin-link {
             position: absolute;
             bottom: 25px;
             left: 25px;
             color: white;
-            font-size: 14px;
+            font-size: 16px;
             text-decoration: underline;
             z-index: 1;
         }
@@ -222,22 +230,24 @@
         <form action="#" method="POST">
             <div class="input-group">
                 <div class="label-row">
-                    <label for="username">ชื่อผู้ใช้หรือเบอร์โทรศัพท์</label>
+                    <label for="username">ชื่อผู้ใช้ <span style="color: red;">*</span></label>
                 </div>
                 <div class="input-wrapper">
-                    <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้หรือเบอร์โทรศัพท์" required>
+                    <input type="text" id="username" placeholder="กรุณากรอกชื่อผู้ใช้" required maxlength="100">
                 </div>
             </div>
 
             <div class="input-group">
                 <div class="label-row">
-                    <label for="password">รหัสผ่าน</label>
-                    <a href="#" class="forgot-password">ลืมรหัสผ่าน?</a>
+                    <label for="password">เบอร์โทรศัพท์ <span style="color: red;">*</span></label>
                 </div>
                 <div class="input-wrapper">
-                    <input type="password" id="password" placeholder="กรุณากรอกรหัสผ่าน" required>
-                    <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+                    <!-- เปลี่ยน maxlength เป็น 10 และเพิ่ม inputmode="numeric" เพื่อให้คีย์บอร์ดมือถือขึ้นตัวเลข -->
+                    <input type="password" id="password" placeholder="กรุณากรอกเบอร์โทร" required maxlength="10" inputmode="numeric" disabled>
+                    <i class="fa-regular fa-eye toggle-password disabled-icon" id="togglePassword"></i>
                 </div>
+                <!-- ส่วนแสดงข้อความ Error สีแดง (ซ่อนไว้เป็นค่าเริ่มต้น) -->
+                <div id="phoneError" style="color: red; font-size: 14px; margin-top: 8px; display: none;">เบอร์โทรไม่ถูกต้อง *</div>
             </div>
 
             <div class="checkbox-group">
@@ -246,23 +256,153 @@
             </div>
 
             <button type="submit" class="btn btn-login">เข้าสู่ระบบ</button>
-            <button type="button" class="btn btn-register">สมัครสมาชิกใหม่</button>
+            <a href="Register_User.html" class="btn btn-register">สมัครสมาชิกใหม่</a>
         </form>
     </div>
 
-    <a href="#" class="admin-link">เข้าสู่ระบบแอดมิน</a>
+    <a href="Login_Admin.html" class="admin-link">เข้าสู่ระบบแอดมิน</a>
 
     <script>
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#password');
+        // 🔹 1. กำหนด URL ของ Back-End ไว้ด้านบนสุด 
+        const API_BASE_URL = "http://localhost:3000/api";
 
+        // ดึงส่วนประกอบต่างๆ บนหน้าเว็บมาเตรียมไว้
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordInput = document.querySelector('#password');
+        const usernameInput = document.querySelector('#username');
+        const rememberCheckbox = document.querySelector('#remember');
+        const loginForm = document.querySelector('form');
+        const phoneError = document.querySelector('#phoneError');
+
+        // ฟังก์ชันสำหรับตรวจว่าพิมพ์ชื่อผู้ใช้หรือยัง เพื่อปลดล็อกช่องรหัสผ่าน(เบอร์โทร)
+        function checkUsernameInput() {
+            if (usernameInput.value.trim() !== '') {
+                passwordInput.disabled = false;
+                togglePassword.classList.remove('disabled-icon');
+            } else {
+                passwordInput.disabled = true;
+                passwordInput.value = ''; 
+                togglePassword.classList.add('disabled-icon');
+                phoneError.style.display = 'none'; 
+            }
+        }
+
+        // จับเหตุการณ์ทุกครั้งที่มีการพิมพ์ในช่องชื่อผู้ใช้
+        usernameInput.addEventListener('input', checkUsernameInput);
+
+        // บังคับให้กรอกได้แค่ "ตัวเลข" ในช่องเบอร์โทร
+        passwordInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, ''); 
+            if (this.value.length === 10) {
+                phoneError.style.display = 'none';
+            }
+        });
+
+        // เช็คความถูกต้องตอนกดออกไปที่อื่น (Blur)
+        passwordInput.addEventListener('blur', function() {
+            if (this.value.length > 0 && this.value.length < 10) {
+                phoneError.style.display = 'block';
+            } else {
+                phoneError.style.display = 'none';
+            }
+        });
+
+        // ระบบสลับการแสดงรหัสผ่าน
         togglePassword.addEventListener('click', function () {
-            // สลับประเภทของ input ระหว่าง password และ text
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
+            if (passwordInput.disabled) return; 
+
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
             
-            // สลับไอคอนดวงตา
+            this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
+        });
+
+        // ดึงข้อมูลที่เคยบันทึกไว้มาแสดง (รองรับการกดย้อนกลับด้วย pageshow)
+        window.addEventListener('pageshow', function() {
+            if (localStorage.getItem('savedUsername')) {
+                usernameInput.value = localStorage.getItem('savedUsername');
+                
+                checkUsernameInput();
+                
+                // สำหรับตัวทดสอบ เรายังดึงรหัสผ่านเก่ามาโชว์อยู่ (แต่ถ้าใช้ API จริงอาจจะไม่เซฟรหัสผ่านลงเครื่องแล้ว)
+                if (localStorage.getItem('savedPassword')) {
+                    passwordInput.value = localStorage.getItem('savedPassword');
+                }
+                rememberCheckbox.checked = true;
+            }
+        });
+
+        // 🔹 2. ระบบส่งข้อมูลเข้าสู่ระบบที่เตรียมพร้อมเชื่อมต่อ Back-End
+        loginForm.addEventListener('submit', async function(event) {
+            // สั่งยกเลิกการเปลี่ยนหน้าแบบปกติ เพื่อให้จัดการด้วย JavaScript
+            event.preventDefault(); 
+            
+            // ตรวจสอบ: ถ้ากรอกเบอร์โทรไม่ครบ 10 ตัว ให้หยุดการเข้าสู่ระบบ
+            if (passwordInput.value.length < 10) {
+                phoneError.style.display = 'block'; 
+                passwordInput.focus(); 
+                return; 
+            }
+
+            // จัดเตรียมข้อมูลเป็น JSON
+            const loginData = {
+                username: usernameInput.value,
+                phone: passwordInput.value
+            };
+
+            // แสดงสถานะกำลังโหลด
+            const submitBtn = document.querySelector('.btn-login');
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = "กำลังเข้าสู่ระบบ...";
+            submitBtn.disabled = true;
+
+            try {
+                // --- (ส่วนนี้คือจุดที่จะใช้ยิง API จริงๆ ในอนาคต ให้เอาคอมเมนต์ออกเมื่อพร้อม) ---
+                // const response = await fetch(`${API_BASE_URL}/login`, {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(loginData)
+                // });
+                // const data = await response.json();
+                
+                // 📌 [โค้ดจำลองชั่วคราว] หน่วงเวลา 1 วินาที เพื่อให้เห็น UI ตอนโหลด
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                const response = { ok: true }; 
+                const data = { token: "dummy_jwt_token_12345" }; 
+
+                // ตรวจสอบผลลัพธ์
+                if (response.ok) {
+                    // ล็อกอินสำเร็จ: เซฟ Token
+                    localStorage.setItem('userToken', data.token); 
+                    
+                    if (rememberCheckbox.checked) {
+                        localStorage.setItem('savedUsername', usernameInput.value);
+                        // เซฟรหัสผ่านไว้ชั่วคราวเพื่อทำต้นแบบ (Prototype)
+                        localStorage.setItem('savedPassword', passwordInput.value); 
+                    } else {
+                        localStorage.removeItem('savedUsername');
+                        localStorage.removeItem('savedPassword');
+                    }
+
+                    // เปลี่ยนหน้าไป Dashboard
+                    window.location.href = 'Dashboard_User.html';
+                } else {
+                    // ล็อกอินไม่สำเร็จ
+                    phoneError.innerText = data.message || "เข้าสู่ระบบไม่สำเร็จ โปรดลองใหม่";
+                    phoneError.style.display = 'block';
+                }
+
+            } catch (error) {
+                // กรณีเชื่อมต่อเซิร์ฟเวอร์ไม่ได้
+                console.error("API Error:", error);
+                phoneError.innerText = "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ในขณะนี้";
+                phoneError.style.display = 'block';
+            } finally {
+                // คืนค่าปุ่มกลับมาเป็นเหมือนเดิม
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            }
         });
     </script>
 </body>
